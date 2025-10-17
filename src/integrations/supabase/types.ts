@@ -14,7 +14,167 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      locations: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          latitude: number
+          longitude: number
+          name: string
+          type: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          latitude: number
+          longitude: number
+          name: string
+          type: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          latitude?: number
+          longitude?: number
+          name?: string
+          type?: string
+        }
+        Relationships: []
+      }
+      route_coordinates: {
+        Row: {
+          created_at: string | null
+          id: string
+          latitude: number
+          longitude: number
+          route_id: string | null
+          sequence_order: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          latitude: number
+          longitude: number
+          route_id?: string | null
+          sequence_order: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          latitude?: number
+          longitude?: number
+          route_id?: string | null
+          sequence_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "route_coordinates_route_id_fkey"
+            columns: ["route_id"]
+            isOneToOne: false
+            referencedRelation: "routes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      routes: {
+        Row: {
+          created_at: string | null
+          description: string
+          difficulty: string | null
+          distance: number
+          end_location_id: string | null
+          estimated_time: number
+          id: string
+          route_name: string
+          start_location_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description: string
+          difficulty?: string | null
+          distance: number
+          end_location_id?: string | null
+          estimated_time: number
+          id?: string
+          route_name: string
+          start_location_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string
+          difficulty?: string | null
+          distance?: number
+          end_location_id?: string | null
+          estimated_time?: number
+          id?: string
+          route_name?: string
+          start_location_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "routes_end_location_id_fkey"
+            columns: ["end_location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "routes_start_location_id_fkey"
+            columns: ["start_location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      waypoints: {
+        Row: {
+          created_at: string | null
+          id: string
+          instruction: string | null
+          location_id: string | null
+          route_id: string | null
+          sequence_order: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          instruction?: string | null
+          location_id?: string | null
+          route_id?: string | null
+          sequence_order: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          instruction?: string | null
+          location_id?: string | null
+          route_id?: string | null
+          sequence_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "waypoints_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "waypoints_route_id_fkey"
+            columns: ["route_id"]
+            isOneToOne: false
+            referencedRelation: "routes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
