@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, ArrowLeft, Map } from "lucide-react";
+import { Search, ArrowLeft, Map, LogIn } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import RouteCard from "@/components/RouteCard";
 import { routes } from "@/data/routes";
 
@@ -29,6 +30,12 @@ const Routes = () => {
               <Map className="h-6 w-6 text-primary" />
               <h1 className="text-2xl font-bold">Campus Routes</h1>
             </div>
+            <Link to="/auth">
+              <Button variant="outline" size="sm">
+                <LogIn className="w-4 h-4 mr-2" />
+                Sign In
+              </Button>
+            </Link>
           </div>
           
           {/* Search Bar */}
