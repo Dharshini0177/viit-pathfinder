@@ -7,7 +7,6 @@ import { Separator } from "@/components/ui/separator";
 import { routes } from "@/data/routes";
 import { toast } from "@/hooks/use-toast";
 import { useRouteData } from "@/hooks/useRouteData";
-import RouteMap from "@/components/RouteMap";
 
 const RouteDetail = () => {
   const { id } = useParams();
@@ -48,10 +47,7 @@ const RouteDetail = () => {
   };
 
   const handleStartNavigation = () => {
-    toast({
-      title: "Navigation Started",
-      description: `Starting navigation for ${route.routeName}`,
-    });
+    navigate(`/navigation/${route.id}`);
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -136,50 +132,6 @@ const RouteDetail = () => {
           </div>
         </div>
 
-        {/* Interactive Map */}
-        {dbRouteData && dbRouteData.coordinates.length > 0 ? (
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-primary" />
-                Interactive Route Map
-              </CardTitle>
-              <CardDescription>Visual representation of your route with markers and path</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <RouteMap
-                routeCoordinates={dbRouteData.coordinates}
-                startLocation={{
-                  name: dbRouteData.start_location.name,
-                  latitude: Number(dbRouteData.start_location.latitude),
-                  longitude: Number(dbRouteData.start_location.longitude),
-                }}
-                endLocation={{
-                  name: dbRouteData.end_location.name,
-                  latitude: Number(dbRouteData.end_location.latitude),
-                  longitude: Number(dbRouteData.end_location.longitude),
-                }}
-                waypoints={dbRouteData.waypoints.map((w) => ({
-                  name: w.location.name,
-                  latitude: Number(w.location.latitude),
-                  longitude: Number(w.location.longitude),
-                }))}
-              />
-            </CardContent>
-          </Card>
-        ) : (
-          <Card className="mb-6 border-dashed">
-            <CardContent className="pt-6 text-center">
-              <Database className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-              <p className="text-muted-foreground mb-2">
-                {isLoading ? "Loading map data..." : "Map data not available for this route yet"}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Route coordinates will be added to the database soon
-              </p>
-            </CardContent>
-          </Card>
-        )}
 
         <Card className="mb-6">
           <CardHeader>
